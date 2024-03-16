@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const NavBar: FC = () => {
   const options = [
     { name: "Banners", route: "/banners", icon: "" },
-    { name: "Banners", route: "/banner", icon: "" },
+    { name: "Rutas de navegación", route: "/nav-control", icon: "" },
   ];
   return (
     <nav className="h-full w-1/6 flex flex-col justify-evenly content-center">
