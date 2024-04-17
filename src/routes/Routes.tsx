@@ -3,6 +3,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "../layout/Layout";
 import ListaBanners from "../pages/banners/Lista";
 import ListaNav from "../pages/nav-control/Lista";
+import ListaOtroNav from "../pages/otros-enlaces/Lista";
+import ListaMiembros from "../pages/miembros/Lista";
 
 const Routes: FC = () => {
   const routes = createBrowserRouter(
@@ -15,6 +17,8 @@ const Routes: FC = () => {
           { index: true, element: <p>XD</p> },
           { path: "banners", element: <ListaBanners /> },
           { path: "nav-control", element: <ListaNav /> },
+          { path: "otros-enlaces", element: <ListaOtroNav /> },
+          { path: "miembros", element: <ListaMiembros /> },
         ],
       },
     ],

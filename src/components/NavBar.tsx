@@ -5,8 +5,8 @@ const NavBar: FC = () => {
   const options = [
     { name: "Banners", route: "/banners", icon: "" },
     { name: "Rutas de navegación", route: "/nav-control", icon: "" },
-    { name: "Otros enlaces", route: "/nav-control", icon: "" },
-    { name: "Miembros", route: "/nav-control", icon: "" },
+    { name: "Otros enlaces", route: "/otros-enlaces", icon: "" },
+    { name: "Miembros", route: "/miembros", icon: "" },
   ];
   return (
     <nav className="sm:h-full sm:w-1/6 flex flex-row sm:flex-col justify-evenly content-center dark:bg-gray-900 rounded shadow dark:shadow-none snap-x overflow-x-auto">

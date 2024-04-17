@@ -1,14 +1,14 @@
 import { FC } from "react";
 
 const Tabla: FC<{
-  data: [];
+  data: any;
   error: boolean;
   columnas: { name: string; selector: (name: string) => string | number }[];
   onClickAction?: any;
   onContextAction?: any;
 }> = ({ data, error, columnas, onClickAction, onContextAction }) => {
   return (
-    <div className="overflow-auto h-100 w-100">
+    <div className="overflow-auto h-full w-full">
       {!error && (
         <table className="table-fixed w-full">
           <thead>
@@ -19,7 +19,7 @@ const Tabla: FC<{
             </tr>
           </thead>
           <tbody>
-            {data.map((row) => {
+            {data.map((row: any) => {
               return (
                 <tr
                   className="text-center"

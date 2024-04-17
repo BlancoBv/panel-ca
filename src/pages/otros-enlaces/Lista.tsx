@@ -10,12 +10,11 @@ const Lista: FC = () => {
   const [actualizador, setActualizador] = useState<boolean>(false);
 
   const [datos, setDatos] = useState<{
-    title: string;
-    descripcion: string;
-    img: string;
-  }>({ title: "", descripcion: "", img: "" });
+    nombre: string;
+    enlace: string;
+  }>({ enlace: "", nombre: "" });
 
-  const { data, isPending, error } = useGetData("/banners", actualizador);
+  const { data, isPending, error } = useGetData("/menuSuperior", actualizador);
 
   const handle = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,20 +24,21 @@ const Lista: FC = () => {
   const addBanner = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await Axios.post("/banners", datos);
+      await Axios.post("/menuSuperior", datos);
       setActualizador(!actualizador);
-      setDatos({ title: "", img: "", descripcion: "" });
+      setDatos({ enlace: "", nombre: "" });
     } catch (error) {}
   };
   const columnas = [
     { name: "Ultima actualización", selector: (row: any) => row.createdAt },
+
     {
-      name: "Estado",
-      selector: (row: any) => (row.mostrar ? "Visible" : "Oculto"),
+      name: "Nombre del enlace",
+      selector: (row: any) => row.nombre,
     },
     {
-      name: "Titulo del banner",
-      selector: (row: any) => row.title,
+      name: "Enlace",
+      selector: (row: any) => row.enlace,
     },
   ];
 
@@ -51,42 +51,31 @@ const Lista: FC = () => {
       >
         <form className="flex flex-col items-center" onSubmit={addBanner}>
           <label>
-            Titulo del banner
+            Nombre del enlace
             <input
               type="text"
-              name="title"
-              value={datos.hasOwnProperty("title") ? datos["title"] : ""}
+              name="nombre"
+              value={datos.hasOwnProperty("nombre") ? datos["nombre"] : ""}
               onChange={handle}
               required
             />
           </label>
           <label>
-            Descripción del banner
+            Enlace
             <input
               type="text"
-              name="descripcion"
-              value={
-                datos.hasOwnProperty("descripcion") ? datos["descripcion"] : ""
-              }
+              name="enlace"
+              value={datos.hasOwnProperty("enlace") ? datos["enlace"] : ""}
               onChange={handle}
               required
             />
           </label>
-          <label>
-            Nombre de la imagen
-            <input
-              type="text"
-              name="img"
-              value={datos.hasOwnProperty("img") ? datos["img"] : ""}
-              onChange={handle}
-              required
-            />
-          </label>
+
           <Button label="Enviar" tipo="submit" />
         </form>
       </Modal>
       <div className="h-1/6">
-        <Button label="Añadir etiqueta" action={() => setShowFormAdd(true)} />
+        <Button label="Añadir enlace" action={() => setShowFormAdd(true)} />
       </div>
       <div className="h-5/6">
         {!isPending && <Tabla data={data} error={error} columnas={columnas} />}
