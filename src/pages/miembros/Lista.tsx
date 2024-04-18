@@ -4,6 +4,7 @@ import Tabla from "../../components/Tabla";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import Axios from "../../axios/Axios";
+import Input, { TextArea } from "../../components/Input";
 
 const Lista: FC = () => {
   const [showFormAdd, setShowFormAdd] = useState<boolean>(false);
@@ -18,10 +19,10 @@ const Lista: FC = () => {
     resumen: string;
     img: string;
     bio: string;
-    contacto?: {
-      redes: { plataforma: string; url: string }[];
-      contactos: [];
-    }[];
+    contacto: {
+      redes: any;
+      contactos: any;
+    };
   }>({
     nombre: "",
     apepat: "",
@@ -31,6 +32,10 @@ const Lista: FC = () => {
     resumen: "",
     img: "",
     bio: "",
+    contacto: {
+      redes: [],
+      contactos: [],
+    },
   });
 
   const { data, isPending, error } = useGetData("/miembros", actualizador);
@@ -38,6 +43,57 @@ const Lista: FC = () => {
   const handle = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setDatos((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleAddCorreos = () => {
+    const element = document.getElementById(
+      "correoContacto"
+    ) as HTMLInputElement;
+    if (element.value === "") return; //evita que se ejecute el codigo de abajo si el valor del formulario esta vacio
+
+    const actualValues = datos.contacto.contactos.filter(
+      (el: string) => el !== element.value
+    );
+    const nextValue = [...actualValues, element.value];
+
+    setDatos({
+      ...datos,
+      contacto: { contactos: [...nextValue], redes: datos.contacto.redes },
+    });
+    element.value = "";
+  };
+  const handleDeleteCorreos = (value: string) => {
+    const actualValues = datos.contacto?.contactos.filter(
+      (el: string) => el !== value
+    );
+    setDatos({
+      ...datos,
+      contacto: { contactos: [...actualValues], ...datos.contacto?.redes },
+    });
+  };
+
+  const handleAddSocial = () => {
+    const plataforma = document.getElementById(
+      "plataforma"
+    ) as HTMLInputElement;
+    const enlace = document.getElementById("enlace") as HTMLInputElement;
+
+    if (plataforma.value === "" || enlace.value === "") return;
+
+    const actualValue = datos.contacto.redes.filter(
+      (red: { plataforma: string; url: string }) =>
+        red.plataforma !== plataforma.value || red.url !== enlace.value
+    );
+
+    const nextValue = [
+      ...actualValue,
+      { plataforma: plataforma.value, url: enlace.value },
+    ];
+
+    setDatos({
+      ...datos,
+      contacto: { redes: [...nextValue], contactos: datos.contacto.contactos },
+    });
   };
 
   const addBanner = async (e: FormEvent) => {
@@ -54,9 +110,14 @@ const Lista: FC = () => {
         resumen: "",
         img: "",
         bio: "",
+        contacto: {
+          redes: [],
+          contactos: [],
+        },
       });
     } catch (error) {}
   };
+
   const columnas = [
     { name: "Ultima actualización", selector: (row: any) => row.createdAt },
     {
@@ -69,6 +130,8 @@ const Lista: FC = () => {
     },
   ];
 
+  console.log(datos);
+
   return (
     <div className="flex flex-col h-full">
       <Modal
@@ -77,94 +140,109 @@ const Lista: FC = () => {
         onClose={() => setShowFormAdd(false)}
       >
         <form className="flex flex-col items-center" onSubmit={addBanner}>
-          <label>
-            Nombre
-            <input
-              type="text"
+          <div className="flex gap-2 flex-wrap">
+            <Input
+              label="Nombre"
+              tipo="text"
               name="nombre"
-              value={datos.hasOwnProperty("nombre") ? datos["nombre"] : ""}
-              onChange={handle}
+              handle={handle}
+              variable={datos}
               required
             />
-          </label>
-          <label>
-            Apellido paterno
-            <input
-              type="text"
+            <Input
+              label="Apellido Paterno"
+              tipo="text"
               name="apepat"
-              value={datos.hasOwnProperty("apepat") ? datos["apepat"] : ""}
-              onChange={handle}
+              handle={handle}
+              variable={datos}
               required
             />
-          </label>
-          <label>
-            Apellido materno
-            <input
-              type="text"
+            <Input
+              label="Apellido materno"
+              tipo="text"
               name="apemat"
-              value={datos.hasOwnProperty("apemat") ? datos["apemat"] : ""}
-              onChange={handle}
+              handle={handle}
+              variable={datos}
               required
             />
-          </label>
-          <label>
-            Puesto
-            <input
-              type="text"
+          </div>
+
+          <div className="flex gap-2 flex-wrap">
+            <Input
+              label="Puesto"
+              tipo="text"
               name="puesto"
-              value={datos.hasOwnProperty("puesto") ? datos["puesto"] : ""}
-              onChange={handle}
+              handle={handle}
+              variable={datos}
               required
             />
-          </label>
-          <label>
-            Grado de estudios
-            <input
-              type="text"
-              name="grado"
-              value={datos.hasOwnProperty("grado") ? datos["grado"] : ""}
-              onChange={handle}
-              required
-            />
-          </label>
-          <label>
-            Imagen de perfil
-            <input
-              type="text"
+            <div className="w-36">
+              <Input
+                label="Grado de estudios"
+                tipo="text"
+                name="grado"
+                handle={handle}
+                variable={datos}
+                required
+              />
+            </div>
+            <Input
+              label="Imagen del perfil"
+              tipo="text"
               name="img"
-              value={datos.hasOwnProperty("img") ? datos["img"] : ""}
-              onChange={handle}
+              handle={handle}
+              variable={datos}
               required
             />
-          </label>
-          <label>
-            Resumen
-            <input
-              type="text"
+          </div>
+          <div className="flex gap-2 flex-wrap">
+            <TextArea
+              label="Resumen"
               name="resumen"
-              value={datos.hasOwnProperty("resumen") ? datos["resumen"] : ""}
-              onChange={handle}
+              handle={handle}
+              variable={datos}
               required
             />
-          </label>
-          <label>
-            Bio
-            <input
-              type="text"
+            <TextArea
+              label="Bio"
               name="bio"
-              value={datos.hasOwnProperty("bio") ? datos["bio"] : ""}
-              onChange={handle}
+              handle={handle}
+              variable={datos}
+              required
             />
-          </label>
-          {/*    <label>
-            Bio
-            <input
-              type="text"
-              name="bio"
-              value={datos.hasOwnProperty("bio") ? datos["bio"] : ""}
-              onChange={handle}
+          </div>
+
+          <div className="flex gap-2">
+            <Input
+              label="Correo de contacto"
+              tipo="text"
+              id="correoContacto"
+              required
             />
-          </label> */}
+            <button type="button" onClick={handleAddCorreos}>
+              Añadir
+            </button>
+          </div>
+          <div>
+            Lista de correos:
+            <ol>
+              {datos.contacto?.contactos.map((el: string, index: number) => (
+                <li key={index}>
+                  {el}{" "}
+                  <button type="button" onClick={() => handleDeleteCorreos(el)}>
+                    Eliminar correo
+                  </button>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div className="flex gap-2">
+            <Input label="Plataforma" id="plataforma" />
+            <Input label="Enlace de la red social" id="enlace" />
+            <button type="button" onClick={handleAddSocial}>
+              Añadir
+            </button>
+          </div>
           <Button label="Enviar" tipo="submit" />
         </form>
       </Modal>

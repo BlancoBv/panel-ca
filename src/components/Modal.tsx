@@ -52,7 +52,9 @@ const Modal: FC<{
                         <i className="fa-solid fa-x fs-5" />X
                       </span>
                     </div>
-                    <div className="flex-grow modal-cuerpo">{children}</div>
+                    <div className="flex-grow modal-cuerpo overflow-auto">
+                      {children}
+                    </div>
                   </animated.div>
                 )
             )}
