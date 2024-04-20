@@ -67,4 +67,34 @@ export const TextArea: FC<{
     </label>
   );
 };
+
+export const Switch: FC<{
+  label: string;
+  name?: string;
+  handle?: any;
+  id?: string;
+  required?: boolean;
+  variable?: any;
+}> = ({ label, name = "", handle = undefined, id, required, variable }) => {
+  return (
+    <label>
+      {label}
+      <input
+        type="checkbox"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-2"
+        name={name}
+        value={
+          variable
+            ? variable.hasOwnProperty(name)
+              ? variable[name]
+              : ""
+            : undefined
+        }
+        onChange={handle}
+        id={id}
+        required={required}
+      />
+    </label>
+  );
+};
 export default Input;

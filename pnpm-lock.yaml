@@ -8,6 +8,9 @@ dependencies:
   '@prismicio/client':
     specifier: ^7.4.1
     version: 7.4.1
+  '@prismicio/react':
+    specifier: ^2.7.4
+    version: 2.7.4(@prismicio/client@7.4.1)(react@18.2.0)
   '@react-spring/web':
     specifier: ^9.7.3
     version: 9.7.3(react-dom@18.2.0)(react@18.2.0)
@@ -17,6 +20,9 @@ dependencies:
   react:
     specifier: ^18.2.0
     version: 18.2.0
+  react-contexify:
+    specifier: ^6.0.0
+    version: 6.0.0(react-dom@18.2.0)(react@18.2.0)
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
@@ -416,6 +422,30 @@ packages:
     engines: {node: '>=14.15.0'}
     dependencies:
       imgix-url-builder: 0.0.4
+    dev: false
+
+  /@prismicio/react@2.7.4(@prismicio/client@7.4.1)(react@18.2.0):
+    resolution: {integrity: sha512-FIbDxAH6gy2Cw9AaA+UhI5LG2QyHwfgJS60Wuo/i6xwcgZRLELUcsoHK7/rLzxSXvNMmiaoqH61Wi5rip8Z0Rg==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      '@prismicio/client': ^6 || ^7
+      react: ^18
+    dependencies:
+      '@prismicio/client': 7.4.1
+      '@prismicio/richtext': 2.1.5
+      react: 18.2.0
+    dev: false
+
+  /@prismicio/richtext@2.1.5:
+    resolution: {integrity: sha512-Sf6iCsciPmfK3uQeFmeY9RTRSuhrCVzyU39OkiJ1VJn8O0531pKapGoWS+5WGxouJtE5+jGqV8L+L2mKP7NkXQ==}
+    engines: {node: '>=12.7.0'}
+    dependencies:
+      '@prismicio/types': 0.2.8
+    dev: false
+
+  /@prismicio/types@0.2.8:
+    resolution: {integrity: sha512-EmuYYil56U+UtEifMD/9TmLzpWliV+X6kypwPq47GNXmIXyFK1JsP3z872fUziXwoBjd2YILj28DNdYXlLOpXg==}
+    engines: {node: '>=12.7.0'}
     dev: false
 
   /@react-spring/animated@9.7.3(react@18.2.0):
@@ -1076,6 +1106,11 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
+
+  /clsx@1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
+    dev: false
 
   /color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
@@ -1955,6 +1990,17 @@ packages:
   /queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
+
+  /react-contexify@6.0.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-jMhz6yZI81Jv3UDj7TXqCkhdkCFEEmvwGCPXsQuA2ZUC8EbCuVQ6Cy8FzKMXa0y454XTDClBN2YFvvmoFlrFkg==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      clsx: 1.2.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /react-dom@18.2.0(react@18.2.0):
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
