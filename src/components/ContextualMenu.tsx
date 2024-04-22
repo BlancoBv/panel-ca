@@ -11,7 +11,7 @@ export interface items {
     label?: string;
     disabled?: boolean | undefined;
     style?: string;
-    action: () => void;
+    action?: () => void;
     subOptions?: {
       content: string;
       icon: string;

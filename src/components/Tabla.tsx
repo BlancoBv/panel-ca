@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler } from "react";
+import { FC } from "react";
 
 const Tabla: FC<{
   data: any;
@@ -53,7 +53,6 @@ export const TablaDropdown: FC<{
   onClickAction?: any;
   onContextAction?: any;
   onContextActionSecondary?: any;
-  dropdownOptions?: any;
 }> = ({
   data,
   columnas,
@@ -61,7 +60,6 @@ export const TablaDropdown: FC<{
   onContextAction,
   onContextActionSecondary,
   error,
-  dropdownOptions,
 }) => {
   const openAccordion = (e: any) => {
     const classList = e.currentTarget.nextSibling.classList;
@@ -113,8 +111,15 @@ export const TablaDropdown: FC<{
                           </tr>
                         </thead>
                         <tbody>
-                          {row.SubMenus.map((el: any) => (
-                            <tr>
+                          {row.SubMenus.map((el: any, index: number) => (
+                            <tr
+                              className=" h-16 border-b"
+                              onContextMenu={(e) =>
+                                onContextActionSecondary
+                                  ? onContextActionSecondary(e, row, index)
+                                  : undefined
+                              }
+                            >
                               <td>{el.createdAt}</td>
                               <td>{el.nombre}</td>
                               <td>{el.url}</td>
