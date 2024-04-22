@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Axios from "../axios/Axios";
 
 function useGetData(url: string, actualizador?: boolean) {
-  const [data, setData] = useState<{ success?: boolean; response: [] }>({
+  const [data, setData] = useState<any>({
     response: [],
   });
   const [error, setError] = useState<boolean>(false);

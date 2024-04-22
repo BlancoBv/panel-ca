@@ -6,31 +6,40 @@ import { useContextMenu } from "react-contexify";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button";
 import Axios from "../../axios/Axios";
-import Input, { Switch } from "../../components/Input";
-import { useAllPrismicDocumentsByType } from "@prismicio/react";
-
+import Input, { Select, Switch } from "../../components/Input";
 const Lista: FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [actualizador, setActualizador] = useState<boolean>(false);
 
   const [useRemotePost, setUseRemotePost] = useState<boolean>(false);
   const [datos, setDatos] = useState<{ nombre?: string; url?: string }>({});
   const ID_CONTEXT = "main_context";
-  const { data, isPending, error } = useGetData("/menuAzul");
+  const { data, isPending, error } = useGetData("/menuAzul", actualizador);
   const { show } = useContextMenu({ id: ID_CONTEXT });
-  const [documents, { state }] = useAllPrismicDocumentsByType("post");
-
-  console.log(documents);
+  const post = useGetData("/post");
 
   const addMenu = async (e: FormEvent) => {
     e.preventDefault();
     try {
       await Axios.post("/menuAzul", datos);
-    } catch (error) {}
+      setActualizador(!actualizador);
+      setShowModal(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handle = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setDatos((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleUseRemote = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setUseRemotePost(true);
+    } else {
+      setUseRemotePost(false);
+    }
   };
 
   const columnas = [
@@ -56,6 +65,8 @@ const Lista: FC = () => {
     },
   ];
 
+  console.log(useRemotePost);
+
   return (
     <div className="flex flex-col h-full">
       <Modal
@@ -69,10 +80,47 @@ const Lista: FC = () => {
             handle={handle}
             name="nombre"
             variable={datos}
+            required
           />
-          <Input label="URL" handle={handle} name="url" variable={datos} />
-          <i>CLicl aqui si quieres seleccionar un post personalizador</i>
-          <Switch label="Usar post remoto" />
+          <Input
+            label="URL"
+            handle={handle}
+            name="url"
+            variable={datos}
+            disabled={useRemotePost}
+            required
+          />
+          <Switch
+            label="Usar post remoto"
+            variable={useRemotePost}
+            handle={handleUseRemote}
+          />
+
+          {useRemotePost && (
+            <Select
+              label="Rutas remotas"
+              name="url"
+              variable={datos}
+              handle={handle}
+            >
+              <option value="">Selecciona una ruta...</option>
+              {!post.isPending &&
+                post.data.map((el: any) => (
+                  <option value={`post${el.url}`}>{el.url}</option>
+                ))}
+              {/* <option
+                onClick={() =>
+                  window.open(
+                    `${import.meta.env.PUBLIC_PRISMIC_API_URL}`,
+                    "__blank"
+                  )
+                }
+              >
+                Añadir nuevo elemento
+              </option> */}
+            </Select>
+          )}
+
           <Button label="Enviar" tipo="submit" />
         </form>
       </Modal>

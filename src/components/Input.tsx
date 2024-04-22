@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 
 const Input: FC<{
   label: string;
@@ -8,6 +8,7 @@ const Input: FC<{
   id?: string;
   required?: boolean;
   variable?: any;
+  disabled?: boolean;
 }> = ({
   label,
   tipo = "text",
@@ -16,6 +17,7 @@ const Input: FC<{
   id,
   required,
   variable,
+  disabled = false,
 }) => {
   return (
     <label>
@@ -34,6 +36,7 @@ const Input: FC<{
         type={tipo}
         id={id}
         required={required}
+        disabled={disabled}
       />
     </label>
   );
@@ -87,7 +90,7 @@ export const Switch: FC<{
           variable
             ? variable.hasOwnProperty(name)
               ? variable[name]
-              : ""
+              : false
             : undefined
         }
         onChange={handle}
@@ -98,3 +101,42 @@ export const Switch: FC<{
   );
 };
 export default Input;
+
+export const Select: FC<{
+  label: string;
+  name?: string;
+  handle?: any;
+  id?: string;
+  required?: boolean;
+  variable?: any;
+  children: ReactNode;
+}> = ({
+  label,
+  name = "",
+  handle = undefined,
+  id,
+  required,
+  variable,
+  children,
+}) => {
+  return (
+    <label>
+      {label}
+      <select
+        name={name}
+        value={
+          variable
+            ? variable.hasOwnProperty(name)
+              ? variable[name]
+              : ""
+            : undefined
+        }
+        onChange={handle}
+        id={id}
+        required={required}
+      >
+        {children}
+      </select>
+    </label>
+  );
+};
