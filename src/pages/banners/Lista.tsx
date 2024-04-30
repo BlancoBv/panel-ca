@@ -49,7 +49,10 @@ const Lista: FC = () => {
         title="Añadir banner"
         onClose={() => setShowFormAdd(false)}
       >
-        <form className="flex flex-col items-center" onSubmit={addBanner}>
+        <form
+          className="flex gap-5 flex-col items-center p-10"
+          onSubmit={addBanner}
+        >
           <label>
             Titulo del banner
             <input

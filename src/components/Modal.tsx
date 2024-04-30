@@ -35,7 +35,7 @@ const Modal: FC<{
               (styleBox, itemBox) =>
                 itemBox && (
                   <animated.div
-                    className={`bg-white rounded p-2 flex flex-col w-11/12 h-5/6 sm:w-3/4`}
+                    className={`bg-white rounded p-3 flex flex-col w-11/12 h-5/6 sm:w-3/4`}
                     style={styleBox}
                   >
                     <div
@@ -52,7 +52,7 @@ const Modal: FC<{
                         <i className="fa-solid fa-x fs-5" />X
                       </span>
                     </div>
-                    <div className="flex-grow modal-cuerpo overflow-auto">
+                    <div className="flex-grow modal-cuerpo overflow-auto p-8">
                       {children}
                     </div>
                   </animated.div>

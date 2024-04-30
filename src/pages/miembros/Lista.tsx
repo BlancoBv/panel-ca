@@ -236,7 +236,7 @@ const Lista: FC = () => {
               ))}
             </ol>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             <Input label="Plataforma" id="plataforma" />
             <Input label="Enlace de la red social" id="enlace" />
             <button type="button" onClick={handleAddSocial}>

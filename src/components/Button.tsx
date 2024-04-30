@@ -6,7 +6,11 @@ const Button: FC<{
   tipo?: "button" | "submit";
 }> = ({ label, action = undefined, tipo = "button" }) => {
   return (
-    <button onClick={action} type={tipo}>
+    <button
+      className=" bg-blue-700 rounded-lg h-fit w-fit p-3 text-white mt-3"
+      onClick={action}
+      type={tipo}
+    >
       {label}
     </button>
   );
